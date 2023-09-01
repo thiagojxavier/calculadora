@@ -42,6 +42,10 @@ function addNumber(event) {
 function showResult() {
     const convertArrayForString = arrayPressKey.join('');
 
+    if ( convertArrayForString === "" ) {
+        return
+    }
+
     const adjustingOperators = adjustingMultiplyAndDivideOperator(convertArrayForString);
 
     const operandString = Function(`return ${adjustingOperators}`);
