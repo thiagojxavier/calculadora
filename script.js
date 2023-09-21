@@ -23,42 +23,25 @@ const btn_clear = clear.addEventListener('click', clearLastNumber);
 const historic = historicIcon.addEventListener('click', viewHistory);
 
 function addNumber(event) {
-    if ( numberRes.className === 'colorRes fieldClear' ) {
-        cleanAfterResult();
-        numberRes.classList.remove('fieldClear');
-    }
-
-    if (numberRes.className === 'colorRes') {
-        numberRes.classList.remove('colorRes');
-    }
+    clearFieldToReuse();
 
     arrayPressKey.push(event.target.innerText);
 
-    const convertArrayForString = arrayPressKey.join(' ');
+    const numberInString = arrayPressKey.join(' ');
     
-    numberRes.innerText = convertArrayForString;
+    numberRes.innerText = numberInString;
 }
 
 function showResult() {
-    const convertArrayForString = arrayPressKey.join('');
+    const numberInString = arrayPressKey.join('');
 
-    if ( convertArrayForString === "" ) {
+    if ( numberInString === "" ) {
         return
     }
 
-    const adjustingOperators = adjustingMultiplyAndDivideOperator(convertArrayForString);
+    const result = calculatingOperation(numberInString);
 
-    const operandString = Function(`return ${adjustingOperators}`);
-    
-    const result = operandString();
-
-    const getResponse = String(result);
-
-    if ( stockHistoric.length > 9 ) {
-        stockHistoric.shift();
-    }
-
-    stockHistoric.push(`${convertArrayForString} = ${getResponse}`);
+    storeOperationInHistory(numberInString, result);
 
     numberRes.innerText = result;
 
@@ -67,22 +50,31 @@ function showResult() {
     numberRes.classList.add('fieldClear')
 }
 
-function cleanAfterResult() {
-    arrayPressKey.length = 0;
+function adjustingOperators(string) {
+    let stringOperation = string;
+
+    const valueAfterAdjustingOperatorMultiply = adjustingMultiplyOperator(stringOperation);
+
+    stringOperation = valueAfterAdjustingOperatorMultiply;
+
+    const valueAfterAdjustingOperatorDivide = adjustingDivideOperator(stringOperation);
+
+    stringOperation = valueAfterAdjustingOperatorDivide;
+
+    return stringOperation;
 }
 
 function clearLastNumber() {
     arrayPressKey.pop();
-    const convertArrayForString = arrayPressKey.join(' ');
-    numberRes.innerText = convertArrayForString;
+    const numberInString = arrayPressKey.join(' ');
+    numberRes.innerText = numberInString;
+    clearFieldToReuse();
 }
 
 function viewHistory() {
-    if (historyList.classList.contains('active')) {
-        historyList.classList.remove('active');
-        historyList.innerHTML = ""
-        return
-    };
+    const HistoricActive = checkIfItIsActive();
+
+    if(HistoricActive) return;
 
     historyList.classList.add('active');
 
@@ -95,16 +87,73 @@ function viewHistory() {
     })
 }
 
-function adjustingMultiplyAndDivideOperator(string) {
+function checkIfItIsActive() {
+    if (historyList.classList.contains('active')) {
+        historyList.classList.remove('active');
+        historyList.innerHTML = ""
+        return true;
+    };
+
+    return false;
+}
+
+function clearFieldToReuse() {
+    if (numberRes.className === 'colorRes fieldClear') {
+        numberRes.classList.remove('colorRes');
+    }
+
+    if ( numberRes.className === 'fieldClear' ) {
+        clearResultArray();
+        numberRes.innerText = "";
+        numberRes.classList.remove('fieldClear');
+    }
+}
+
+function clearResultArray() {
+    arrayPressKey.length = 0;
+}
+
+function calculatingOperation(stringOperation) {
+    const valueAfterAdjusting = adjustingOperators(stringOperation);
+
+    const operandString = Function(`return ${valueAfterAdjusting}`);
+    
+    const result = operandString();
+
+    return result
+}
+
+function adjustingMultiplyOperator(string) {
     let stg = string;
 
     if ( stg.includes('x') ) {
         stg = stg.replaceAll('x', '*');
     }
 
+    return stg
+}
+
+function adjustingDivideOperator(string) {
+    let stg = string;
+
     if ( stg.includes('÷') ) {
         stg = stg.replaceAll('÷', '/');
     }
 
     return stg
+}
+
+function storeOperationInHistory(numberInString, result) {
+    const getResponse = String(result);
+
+    stockHistoric.push(`${numberInString} = ${getResponse}`);
+
+    limitHistoryToTenDisplayed();
+
+}
+
+function limitHistoryToTenDisplayed() {
+    if ( stockHistoric.length > 10 ) {
+        stockHistoric.shift();
+    }
 }
