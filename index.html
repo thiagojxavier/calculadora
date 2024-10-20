@@ -12,83 +12,82 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
-<body>
-    <header>
-        Calculadora
+<body class="container">
+    <header class="header">
+        <h1 class="header__title">Calculadora</h1>
     </header>
 
-    <main>
-        <div id="res">
-            <div class="icon">
-                <i class="bi bi-clock-history"></i>
-                <ul class="list-history">
-                </ul>
+    <main class="main">
+        <ul class="main__list-history"></ul>
+        <div class="main__response" id="res">
+            <div>
+                <i class="bi bi-clock-history main__response__icon"></i>
             </div>
-            <p id="numberRes"></p>
+            <p class="main__response__digits" id="numberRes"></p>
         </div>
-        <div id="calculator">
-            <div class="operator settings">
+        <div class="main__calculator" id="calculator">
+            <div class="main__calculator__operator settings">
                 +
             </div>
-            <div class="operator settings">
+            <div class="main__calculator__operator settings">
                 -
             </div>
-            <div class="operator">
+            <div class="main__calculator__operator">
                 x
             </div>
-            <div class="operator settings">
+            <div class="main__calculator__operator settings">
                 ÷
             </div>
-            <div class="number">
+            <div class="main__calculator__number">
                 1
             </div>
-            <div class="number">
+            <div class="main__calculator__number">
                 2
             </div>
-            <div class="number">
+            <div class="main__calculator__number">
                 3
             </div>
-            <div class="operator">
+            <div class="main__calculator__operator">
                 (
             </div>
-            <div class="number">
+            <div class="main__calculator__number">
                 4
             </div>
-            <div class="number">
+            <div class="main__calculator__number">
                 5
             </div>
-            <div class="number">
+            <div class="main__calculator__number">
                 6
             </div>
-            <div class="operator">
+            <div class="main__calculator__operator">
                 )
             </div>
-            <div class="number">
+            <div class="main__calculator__number">
                 7
             </div>
-            <div class="number">
+            <div class="main__calculator__number">
                 8
             </div>
-            <div class="number">
+            <div class="main__calculator__number">
                 9
             </div>
-            <div class="clear">
+            <div class="main__calculator__clear">
                 ce
             </div>
-            <div class="number">
+            <div class="main__calculator__number">
                 0
             </div>
-            <div class="operator settings">
+            <div class="main__calculator__operator settings">
                 .
             </div>
-            <div class="btn-res">
+            <div class="main__calculator__equal">
                 =
             </div>
         </div>
     </main>
 
-    <footer>
-        Desenvolvido por Thiago
+    <footer class="footer">
+        Desenvolvido por ThiagoDEV
     </footer>
 
     <script src="./script.js"></script>

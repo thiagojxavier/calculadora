@@ -5,7 +5,7 @@
     list-style: none;
 }
 
-body {
+.container {
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -15,17 +15,17 @@ body {
     overflow: hidden
 }
 
-header {
+.header {
     text-align: center;
     font-weight: bold;
     text-transform: uppercase;
     padding: 5px;
-    font-size: 1.6em;
+    font-size: 1em;
     background-color: rgba(0, 0, 0, 0.819);
     color: #fff;
 }
 
-div#res {
+.main__response {
     background-color: rgba(128, 128, 128, 0.187);
     height: 80px;
     max-width: 450px;
@@ -34,17 +34,17 @@ div#res {
     display: flex;
 }
 
-div#res i {
+.main__response__icon {
     margin: 5px;
     font-size: 1.1em;
     width: 20%;
 }
 
-ul {
+.main__list-history {
     display: none;
 }
 
-ul.active {
+.main__list-history.active {
     display: block;
     width: 280px;
     background-color: rgba(128, 128, 128, 0.822);
@@ -53,7 +53,7 @@ ul.active {
     font-weight: bold;
 }
 
-ul.active li {
+.main__list-history.active .item {
     background-color: rgba(128, 128, 128, 0.822);
     border: 0.5px solid #fff;
     list-style: none;
@@ -61,12 +61,12 @@ ul.active li {
     color: #fff;
 }
 
-div#res i:hover {
+.main__response__icon:hover {
     cursor: pointer;
     color: rgba(0, 0, 255, 0.734);
 }
 
-div p {
+.main__response__digits {
     width: 80%;
     display: flex;
     align-items: center;
@@ -75,7 +75,7 @@ div p {
     font-size: 1.3em;
 }
 
-div#calculator {
+.main__calculator {
     max-width: 450px;
     margin: 0 auto;
     display: grid;
@@ -86,7 +86,7 @@ div#calculator {
     gap: 2px;
 }
 
-div.operator {
+.main__calculator__operator {
     background-color: rgba(128, 128, 128, 0.422);
     width: 100%;
     height: 100%;
@@ -96,15 +96,15 @@ div.operator {
     cursor: pointer;
 }
 
-div.operator:hover {
+.main__calculator__operator:hover {
     background-color: rgba(128, 128, 128, 0.522);
 }
 
-div.settings {
+.main__calculator__operator.settings {
     font-size: 1.4em;
 }
 
-div.number {
+.main__calculator__number {
     background-color: rgba(128, 128, 128, 0.242);
     width: 100%;
     height: 100%;
@@ -114,7 +114,11 @@ div.number {
     cursor: pointer;
 }
 
-div.clear {
+.main__calculator__number:hover {
+    background-color: rgba(128, 128, 128, 0.342);
+}
+
+.main__calculator__clear {
  background-color: rgba(128, 128, 128, 0.422);
     width: 100%;
     height: 100%;
@@ -124,11 +128,7 @@ div.clear {
     cursor: pointer;
 }
 
-div.number:hover {
-    background-color: rgba(128, 128, 128, 0.342);
-}
-
-div.btn-res {
+.main__calculator__equal {
     background-color: rgba(0, 0, 255, 0.734);
     width: 100%;
     height: 100%;
@@ -141,11 +141,11 @@ div.btn-res {
     grid-row: 4/6;
 }
 
-div.btn-res:hover {
+.main__calculator__equal:hover {
     background-color: rgba(0, 0, 255, 0.834);
 }
 
-p.colorRes{
+.colorRes{
     color: rgb(0, 128, 0);
 
     font-weight: bolder;
@@ -155,7 +155,7 @@ p.colorRes{
     transition: all .3s;
 }
 
-footer {
+.footer {
     background-color: rgba(0, 0, 0, 0.819);
     color: #fff;
     padding: 5px;

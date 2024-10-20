@@ -1,10 +1,10 @@
-const operators = document.querySelectorAll('.operator');
-const numbers = document.querySelectorAll('.number');
-const clear = document.querySelector('.clear');
-const calculate = document.querySelector('.btn-res');
+const operators = document.querySelectorAll('.main__calculator__operator');
+const numbers = document.querySelectorAll('.main__calculator__number');
+const clear = document.querySelector('.main__calculator__clear');
+const calculate = document.querySelector('.main__calculator__equal');
 const numberRes = document.getElementById('numberRes');
 const historicIcon = document.querySelector('.bi-clock-history');
-const historyList = document.querySelector('.list-history')
+const historyList = document.querySelector('.main__list-history')
 const arrayPressKey = [];
 const stockHistoric = [];
 
@@ -80,6 +80,7 @@ function viewHistory() {
 
     stockHistoric.forEach( result => {
         const li = document.createElement('li');
+        li.classList.add('item')
 
         li.innerText = result
 
@@ -116,9 +117,7 @@ function clearResultArray() {
 function calculatingOperation(stringOperation) {
     const valueAfterAdjusting = adjustingOperators(stringOperation);
 
-    const operandString = Function(`return ${valueAfterAdjusting}`);
-    
-    const result = operandString();
+    const result = eval(valueAfterAdjusting);
 
     return result
 }
