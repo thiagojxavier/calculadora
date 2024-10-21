@@ -20,9 +20,9 @@
     text-align: center;
     font-weight: bold;
     text-transform: uppercase;
-    padding: 5px;
+    padding: 10px 0;
     font-size: 1em;
-    background-color: rgba(0, 0, 0, 0.819);
+    background-color: #424554;
     color: #fff;
 }
 
@@ -51,34 +51,32 @@
     display: flex;
     opacity: 0;
     visibility: 0;
-    transition: all .5s;
+    transition: opacity .5s ease-in-out;
 }
 
 .main__list-history.active {
     display: block;
-    max-height: 100px;
+    max-height: 120px;
     overflow-y: auto;
     opacity: 1;
     visibility: 1;
     width: 280px;
-    background-color: #424554;
     position: absolute;
-    top: 50px;
+    top: 70px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
     font-weight: bold;
-    border: 1px solid #424554;
 }
 
 /* Colocar o historico embaixo do botão */
 
 .main__list-history.active .item {
-    background-color: #9c99aa;
+    background-color: #424554;
     list-style: none;
     padding: 10px;
     color: #fff;
-    border: 1px solid #424554;
+    border: 1px solid #9c99aa;
 }
 
 .main__response__icon:hover {
@@ -207,16 +205,39 @@
 
 .colorRes{
     color: #424554;
-
     font-weight: bolder;
-
     font-size: 1.8em;
 
     transition: all .3s;
 }
 
 .footer {
-    background-color: rgba(0, 0, 0, 0.819);
+    background-color: #424554;
     color: #fff;
-    padding: 5px;
+    padding: 10px;
+}
+
+.footer__my-name {
+    text-transform: uppercase;
+}
+
+@media (min-height: 700px) {
+    .main__list-history.active {
+        max-height: 150px;
+    }
+    
+}
+
+@media (min-height: 900px) {
+    .main__list-history.active {
+        max-height: 240px;
+    }
+    
+}
+
+@media (min-height: 1080px) {
+    .main__list-history.active {
+        max-height: 300px;
+    }
+    
 }
