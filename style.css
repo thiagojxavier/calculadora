@@ -50,7 +50,6 @@
 .main__list-history {
     display: flex;
     opacity: 0;
-    visibility: 0;
     transition: opacity .5s ease-in-out;
 }
 
@@ -59,7 +58,6 @@
     max-height: 120px;
     overflow-y: auto;
     opacity: 1;
-    visibility: 1;
     width: 280px;
     position: absolute;
     top: 70px;
@@ -69,14 +67,13 @@
     font-weight: bold;
 }
 
-/* Colocar o historico embaixo do botão */
-
 .main__list-history.active .item {
     background-color: #424554;
     list-style: none;
     padding: 10px;
     color: #fff;
     border: 1px solid #9c99aa;
+    cursor: pointer;
 }
 
 .main__response__icon:hover {

@@ -7,14 +7,21 @@ const historicIcon = document.querySelector('.bi-clock-history');
 const historyList = document.querySelector('.main__list-history')
 const arrayPressKey = [];
 const stockHistoric = [];
+const numbersAndOperatorsKeyDown = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '/', '*', 'Enter', 'e']
 
 const operatorsEvent = operators.forEach( operator => {
-    operator.addEventListener('click', addNumber );
+    operator.addEventListener('click', addToDisplay );
 });
 
 const numbersEvent = numbers.forEach( operator => {
-    operator.addEventListener('click', addNumber );
+    operator.addEventListener('click', addToDisplay );
 });
+
+addEventListener('keydown', (event) => {
+    if(numbersAndOperatorsKeyDown.includes(event.key)) {
+        console.log('a')
+    }
+})
 
 const operatorCalculate = calculate.addEventListener('click', showResult);
 
@@ -22,10 +29,14 @@ const btn_clear = clear.addEventListener('click', clearLastNumber);
 
 const historic = historicIcon.addEventListener('click', viewHistory);
 
-function addNumber(event) {
+function addToDisplay(event) {
     clearFieldToReuse();
 
+    checkIfItIsActive();
+
     arrayPressKey.push(event.target.innerText);
+
+    console.log(arrayPressKey)
 
     const numberInString = arrayPressKey.join(' ');
     
@@ -44,6 +55,8 @@ function showResult() {
     storeOperationInHistory(numberInString, result);
 
     numberRes.innerText = result;
+    clearResultArray();
+    arrayPressKey.push(result);
 
     numberRes.classList.add('colorRes');
 
@@ -72,9 +85,11 @@ function clearLastNumber() {
 }
 
 function viewHistory() {
-    const HistoricActive = checkIfItIsActive();
+    if(stockHistoric.length === 0) return;
 
-    if(HistoricActive) return;
+    const historicActive = checkIfItIsActive();
+
+    if(historicActive) return;
 
     historyList.classList.add('active');
 
@@ -85,7 +100,18 @@ function viewHistory() {
         li.innerText = result
 
         historyList.appendChild(li);
+
+        li.addEventListener('click', recoverValueFromHistory)
     })
+}
+
+function recoverValueFromHistory(event) {
+    clearResultArray();
+    const resultInHistory = event.target.innerText;
+    const resultHistory = resultInHistory.split("=")[1].trim();
+
+    arrayPressKey.push(resultHistory);
+    numberRes.innerText = resultHistory;
 }
 
 function checkIfItIsActive() {
@@ -99,12 +125,11 @@ function checkIfItIsActive() {
 }
 
 function clearFieldToReuse() {
-    if (numberRes.className === 'colorRes fieldClear') {
+    if (numberRes.className === 'main__response__digits colorRes fieldClear') {
         numberRes.classList.remove('colorRes');
     }
 
-    if ( numberRes.className === 'fieldClear' ) {
-        clearResultArray();
+    if ( numberRes.className === 'main__response__digits fieldClear' ) {
         numberRes.innerText = "";
         numberRes.classList.remove('fieldClear');
     }
@@ -148,7 +173,6 @@ function storeOperationInHistory(numberInString, result) {
     stockHistoric.push(`${numberInString} = ${getResponse}`);
 
     limitHistoryToTenDisplayed();
-
 }
 
 function limitHistoryToTenDisplayed() {
