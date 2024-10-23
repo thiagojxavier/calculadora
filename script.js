@@ -4,22 +4,33 @@ const clear = document.querySelector('.main__calculator__clear');
 const calculate = document.querySelector('.main__calculator__equal');
 const numberRes = document.getElementById('numberRes');
 const historicIcon = document.querySelector('.bi-clock-history');
-const historyList = document.querySelector('.main__list-history')
+const historyList = document.querySelector('.main__list-history');
+const warningError = document.querySelector('.main__warning');
 const arrayPressKey = [];
 const stockHistoric = [];
-const numbersAndOperatorsKeyDown = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '/', '*', 'Enter', 'e']
+const numbersAndOperatorsKeyDown = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '/', '*', 'e', '(', ')']
 
 const operatorsEvent = operators.forEach( operator => {
-    operator.addEventListener('click', addToDisplay );
+    operator.addEventListener('click', handleShowDigitsOnCalculator );
 });
 
 const numbersEvent = numbers.forEach( operator => {
-    operator.addEventListener('click', addToDisplay );
+    operator.addEventListener('click', handleShowDigitsOnCalculator );
 });
 
 addEventListener('keydown', (event) => {
     if(numbersAndOperatorsKeyDown.includes(event.key)) {
-        console.log('a')
+        addToDisplay(event.key);
+        return
+    }
+
+    if(event.key === 'Backspace') {
+        clearLastNumber();
+        return
+    }
+
+    if(event.key === 'Enter') {
+        showResult();
     }
 })
 
@@ -29,16 +40,20 @@ const btn_clear = clear.addEventListener('click', clearLastNumber);
 
 const historic = historicIcon.addEventListener('click', viewHistory);
 
-function addToDisplay(event) {
+function handleShowDigitsOnCalculator(event) {
+    addToDisplay(event.target.innerText)
+}
+
+function addToDisplay(key) {
     clearFieldToReuse();
 
     checkIfItIsActive();
 
-    arrayPressKey.push(event.target.innerText);
+    warningError.classList.remove('active');
 
-    console.log(arrayPressKey)
+    arrayPressKey.push(key);
 
-    const numberInString = arrayPressKey.join(' ');
+    const numberInString = arrayPressKey.join('');
     
     numberRes.innerText = numberInString;
 }
@@ -79,7 +94,7 @@ function adjustingOperators(string) {
 
 function clearLastNumber() {
     arrayPressKey.pop();
-    const numberInString = arrayPressKey.join(' ');
+    const numberInString = arrayPressKey.join('');
     numberRes.innerText = numberInString;
     clearFieldToReuse();
 }
@@ -107,6 +122,8 @@ function viewHistory() {
 
 function recoverValueFromHistory(event) {
     clearResultArray();
+    checkIfItIsActive();
+
     const resultInHistory = event.target.innerText;
     const resultHistory = resultInHistory.split("=")[1].trim();
 
@@ -142,9 +159,12 @@ function clearResultArray() {
 function calculatingOperation(stringOperation) {
     const valueAfterAdjusting = adjustingOperators(stringOperation);
 
-    const result = eval(valueAfterAdjusting);
-
-    return result
+    try {
+        const result = eval(valueAfterAdjusting);
+        return result
+    } catch(error) {
+        warningError.classList.add('active');
+    }
 }
 
 function adjustingMultiplyOperator(string) {
